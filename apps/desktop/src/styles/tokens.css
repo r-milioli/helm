@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --blue: #2563eb;
+  --blue-2: #1d4ed8;
+  --blue-soft: #eff6ff;
+  --blue-tint: #dbeafe;
+  --cyan: #0ea5e9;
+  --green: #16a34a;
+  --green-soft: #ecfdf3;
+  --amber: #d97706;
+  --amber-soft: #fffbeb;
+  --red: #dc2626;
+  --red-soft: #fef2f2;
+  --violet: #7c3aed;
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --surface-3: #f1f5f9;
+  --text: #172033;
+  --muted: #64748b;
+  --subtle: #94a3b8;
+  --line: #e2e8f0;
+  --shadow: 0 12px 34px rgba(15, 23, 42, 0.08);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+  --sidebar: 252px;
+  --radius: 14px;
+  --radius-sm: 10px;
+}
+
+[data-theme='dark'] {
+  --bg: #0b1220;
+  --surface: #111c2e;
+  --surface-2: #152238;
+  --surface-3: #1b2a40;
+  --text: #e7eef9;
+  --muted: #9aabc2;
+  --subtle: #71839d;
+  --line: #263750;
+  --blue-soft: #142b4f;
+  --blue-tint: #1b3a66;
+  --green-soft: #102d27;
+  --amber-soft: #332714;
+  --red-soft: #351c25;
+  --shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: background 0.2s, color 0.2s;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.25);
+  outline-offset: 2px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#root {
+  min-height: 100vh;
+}
