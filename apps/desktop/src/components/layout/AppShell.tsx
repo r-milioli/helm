@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useApp } from '../../context/AppContext'
 import { isHelmReady } from '../../lib/helm'
-import helmLogo from '../../assets/helm-logo-300.png'
+import helmLogo from '../../assets/helm-logo.png'
 
 const workspaceLinks = [
   { to: '/', label: 'Visão geral', end: true },
@@ -36,23 +36,10 @@ export function AppShell() {
 
   return (
     <div className="app">
-      <svg aria-hidden="true" width="0" height="0" style={{ position: 'absolute' }}>
-        <filter id="helm-logo-knockout" colorInterpolationFilters="sRGB">
-          {/* Usa a luminosidade para tornar pixels pretos transparentes */}
-          <feColorMatrix
-            type="matrix"
-            values="
-              1 0 0 0 0
-              0 1 0 0 0
-              0 0 1 0 0
-              1.2 1.2 1.2 0 -0.15"
-          />
-        </filter>
-      </svg>
       <aside className="sidebar">
         <div className="brand">
           <div className="brand-mark">
-            <img src={helmLogo} alt="Helm" />
+            <img src={helmLogo} alt="Helm" width={40} height={40} decoding="async" />
           </div>
           <div>
             <div className="brand-name">helm</div>
