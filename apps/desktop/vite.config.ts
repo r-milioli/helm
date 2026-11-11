@@ -16,7 +16,7 @@ export default defineConfig({
           build: {
             outDir: 'dist-electron',
             rollupOptions: {
-              external: ['electron', 'sql.js', /^node:/],
+              external: ['electron', /^node:/],
             },
           },
         },
@@ -26,8 +26,16 @@ export default defineConfig({
         vite: {
           build: {
             outDir: 'dist-electron',
+            lib: {
+              entry: 'electron/preload.ts',
+              formats: ['cjs'],
+            },
             rollupOptions: {
               external: ['electron'],
+              output: {
+                entryFileNames: 'preload.cjs',
+                format: 'cjs',
+              },
             },
           },
         },

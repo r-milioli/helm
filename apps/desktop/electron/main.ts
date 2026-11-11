@@ -27,7 +27,20 @@ process.env.VITE_PUBLIC = app.isPackaged
 let win: BrowserWindow | null = null
 const VITE_DEV_SERVER_URL = process.env.VITE_DEV_SERVER_URL
 
+function resolveAppIcon() {
+  const candidates = [
+    path.join(process.cwd(), 'build', 'icon.png'),
+    path.join(process.cwd(), 'public', 'helm-icon-300.png'),
+    path.join(__dirname, '../build/icon.png'),
+    path.join(__dirname, '../public/helm-icon-300.png'),
+    path.join(app.getAppPath(), 'build', 'icon.png'),
+    path.join(app.getAppPath(), 'public', 'helm-icon-300.png'),
+  ]
+  return candidates.find((file) => fs.existsSync(file))
+}
+
 async function createWindow() {
+  const icon = resolveAppIcon()
   win = new BrowserWindow({
     width: 1440,
     height: 900,
@@ -35,11 +48,13 @@ async function createWindow() {
     minHeight: 700,
     title: 'Helm',
     backgroundColor: '#F5F7FB',
+    ...(icon ? { icon } : {}),
     webPreferences: {
-      preload: path.join(
-        __dirname,
-        fs.existsSync(path.join(__dirname, 'preload.mjs')) ? 'preload.mjs' : 'preload.js',
-      ),
+      preload: (() => {
+        const candidates = ['preload.cjs', 'preload.js', 'preload.mjs']
+        const file = candidates.find((name) => fs.existsSync(path.join(__dirname, name)))
+        return path.join(__dirname, file || 'preload.cjs')
+      })(),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: false,
@@ -116,6 +131,9 @@ function registerIpc() {
 
 app.whenReady().then(async () => {
   try {
+    if (process.platform === 'win32') {
+      app.setAppUserModelId('com.helm.desktop')
+    }
     await initDatabase()
     const settings = getSettings()
     ixClient.setConfig({

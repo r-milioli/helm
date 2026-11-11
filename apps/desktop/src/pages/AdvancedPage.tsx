@@ -23,16 +23,18 @@ export function AdvancedPage() {
   const [history, setHistory] = useState<HistoryItem[]>([])
 
   useEffect(() => {
-    helm()
-      .api.listEndpoints()
-      .then((list) => {
+    ;(async () => {
+      try {
+        const list = await helm().api.listEndpoints()
         setEndpoints(list)
         if (list[0]) {
           setMethod(list[0].method)
           setBodyText(JSON.stringify(list[0].sampleBody ?? {}, null, 2))
         }
-      })
-      .catch((err) => toast('Erro', String(err), 'error'))
+      } catch (err) {
+        toast('Erro', err instanceof Error ? err.message : String(err), 'error')
+      }
+    })()
   }, [toast])
 
   const filtered = useMemo(

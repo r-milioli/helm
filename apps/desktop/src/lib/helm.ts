@@ -1,8 +1,19 @@
+export function isHelmReady() {
+  return typeof window !== 'undefined' && Boolean(window.helm)
+}
+
 export function helm() {
-  if (!window.helm) {
-    throw new Error('API do Helm indisponível. Execute o app pelo Electron.')
+  if (!isHelmReady()) {
+    throw new Error('API do Helm indisponível. Execute o app com npm run dev (janela Electron), não pelo navegador.')
   }
   return window.helm
+}
+
+export async function withHelm<T>(fn: (api: typeof window.helm) => Promise<T>): Promise<T> {
+  if (!isHelmReady()) {
+    throw new Error('API do Helm indisponível. Execute o app com npm run dev (janela Electron), não pelo navegador.')
+  }
+  return fn(window.helm)
 }
 
 export function asList(data: unknown): any[] {

@@ -1,5 +1,7 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useApp } from '../../context/AppContext'
+import { isHelmReady } from '../../lib/helm'
+import helmLogo from '../../assets/helm-logo-300.png'
 
 const workspaceLinks = [
   { to: '/', label: 'Visão geral', end: true },
@@ -34,9 +36,24 @@ export function AppShell() {
 
   return (
     <div className="app">
+      <svg aria-hidden="true" width="0" height="0" style={{ position: 'absolute' }}>
+        <filter id="helm-logo-knockout" colorInterpolationFilters="sRGB">
+          {/* Usa a luminosidade para tornar pixels pretos transparentes */}
+          <feColorMatrix
+            type="matrix"
+            values="
+              1 0 0 0 0
+              0 1 0 0 0
+              0 0 1 0 0
+              1.2 1.2 1.2 0 -0.15"
+          />
+        </filter>
+      </svg>
       <aside className="sidebar">
         <div className="brand">
-          <div className="brand-mark">H</div>
+          <div className="brand-mark">
+            <img src={helmLogo} alt="Helm" />
+          </div>
           <div>
             <div className="brand-name">helm</div>
             <div className="brand-sub">workspace</div>
@@ -104,6 +121,15 @@ export function AppShell() {
           </div>
         </header>
         <div className="content">
+          {!isHelmReady() ? (
+            <div className="panel" style={{ marginBottom: 16 }}>
+              <strong>Bridge Electron indisponível.</strong>
+              <p className="muted" style={{ marginBottom: 0 }}>
+                Abra o Helm pela janela do Electron (`npm run dev`), não pela URL do Vite no
+                navegador.
+              </p>
+            </div>
+          ) : null}
           <Outlet />
         </div>
       </main>

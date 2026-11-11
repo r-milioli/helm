@@ -16,6 +16,17 @@
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.9.4"
   },
+  "build": {
+    "appId": "com.helm.desktop",
+    "productName": "Helm",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "win": {
+      "icon": "build/icon.png"
+    }
+  },
   "devDependencies": {
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",

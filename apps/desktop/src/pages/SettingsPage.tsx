@@ -18,10 +18,13 @@ export function SettingsPage() {
   }, [settings])
 
   useEffect(() => {
-    helm()
-      .app.getVersion()
-      .then(setVersion)
-      .catch(() => setVersion('dev'))
+    ;(async () => {
+      try {
+        setVersion(await helm().app.getVersion())
+      } catch {
+        setVersion('dev')
+      }
+    })()
   }, [])
 
   async function save() {
